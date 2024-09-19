@@ -64,7 +64,7 @@ public class ProductController {
 	//http://IP:8080/api/v1/products/1
 		@DeleteMapping("/{id}")
 		public String deleteProduct(@PathVariable("id") Integer productId){
-			if(map.containsKey(productId)) {
+			if(!map.containsKey(productId)) {
 				throw new ProductNotFoundException("Product With Name "+productId+" Does not exist");
 			}
 			
@@ -81,18 +81,7 @@ public class ProductController {
 			return map.computeIfPresent(productId, (Integer key,Product oldProduct) -> product);
 		}	
 		
-		@ResponseStatus(value = HttpStatus.NOT_FOUND,reason="Not Found")
-		@ExceptionHandler(ProductNotFoundException.class)
-		public void notFoundHandler() {
-			
-		}
 		
-		
-		@ResponseStatus(value = HttpStatus.NOT_FOUND,reason="Already Exists")
-		@ExceptionHandler(ProductAlreadyExistsException.class)
-		public void alreadyExistsHandler() {
-			
-		}
 		
 		
 	
